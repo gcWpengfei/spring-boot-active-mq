@@ -57,7 +57,7 @@ public class ActiveMQConfig {
     @Bean
     public JmsListenerContainerFactory<?> jmsListenerContainerTopic(ActiveMQConnectionFactory connectionFactory){
         DefaultJmsListenerContainerFactory bean = new DefaultJmsListenerContainerFactory();
-        //ÉèÖÃÎª·¢²¼¶©ÔÄ·½Ê½, Ä¬ÈÏÇé¿öÏÂÊ¹ÓÃµÄÉú²úÏû·ÑÕß·½Ê½
+        //è®¾ç½®ä¸ºå‘å¸ƒè®¢é˜…æ–¹å¼, é»˜è®¤æƒ…å†µä¸‹ä½¿ç”¨çš„ç”Ÿäº§æ¶ˆè´¹è€…æ–¹å¼
         bean.setPubSubDomain(true);
         bean.setConnectionFactory(connectionFactory);
         return bean;
