@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.connection.CachingConnectionFactory;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.support.converter.MessageConverter;
 
 /**
  * @author: elvin
@@ -61,5 +64,22 @@ public class ActiveMQConfig {
         bean.setPubSubDomain(true);
         bean.setConnectionFactory(connectionFactory);
         return bean;
+    }
+
+    @Bean(name = "myJmsTemplate")
+    public JmsTemplate getJmsTemplate(ActiveMQConnectionFactory nonXaJmsConnectionFactory){
+        //使用CachingConnectionFactory可以提高部分性能。
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
+        cachingConnectionFactory.setSessionCacheSize(100);
+        cachingConnectionFactory.setTargetConnectionFactory(nonXaJmsConnectionFactory);
+        JmsTemplate jmsTemplate = new JmsTemplate(cachingConnectionFactory);
+        //设置deliveryMode（持久化）, priority, timeToLive必须开启
+        jmsTemplate.setExplicitQosEnabled(true);
+        // 设置消息是否持久化
+        jmsTemplate.setDeliveryPersistent(true);
+
+        // 设置消息是否以事务
+        jmsTemplate.setSessionTransacted(true);
+        return jmsTemplate;
     }
 }

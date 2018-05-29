@@ -51,6 +51,9 @@ public class ActiveMQConfig {
     public JmsListenerContainerFactory<?> jmsListenerContainerQueue(ActiveMQConnectionFactory connectionFactory){
         DefaultJmsListenerContainerFactory bean = new DefaultJmsListenerContainerFactory();
         bean.setConnectionFactory(connectionFactory);
+
+
+
         return bean;
     }
 
@@ -60,6 +63,11 @@ public class ActiveMQConfig {
         //设置为发布订阅方式, 默认情况下使用的生产消费者方式
         bean.setPubSubDomain(true);
         bean.setConnectionFactory(connectionFactory);
+
+        //实现持久订阅
+        connectionFactory.setClientID("client_01");
+        bean.setSubscriptionDurable(true);
+
         return bean;
     }
 }
