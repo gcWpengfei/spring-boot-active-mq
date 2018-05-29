@@ -49,4 +49,15 @@ public class PublishController {
 
         return "topic 发送成功";
     }
+
+    @RequestMapping("/queueAndTopic")
+    public String queueAndTopic(){
+
+        for (int i = 0; i < 10 ; i++){
+            jms.convertAndSend(queue, "queue"+i);
+            jms.convertAndSend(topic, "topic"+i);
+        }
+
+        return "queue ,topic 发送成功";
+    }
 }

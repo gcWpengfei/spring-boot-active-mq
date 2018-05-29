@@ -6,9 +6,15 @@ spring:
     user: admin
     password: admin
     broker-url: tcp://127.0.0.1:61616
+    # 对应ActiveMQ集群时候的broker-url配置。
+    # broker-url=failover:(tcp://localhost:61616,tcp://localhost:61617)
     pool:
       enabled: true
       max-connections: 10
 
 queueName: publish.queue
 topicName: publish.topic
+
+
+# queueName: wpf.queue
+# topicName: wpf.topic

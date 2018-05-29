@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueueListener {
 
+    // 生产/消费模式下多个消费者会轮流消费队列中的消息
     @JmsListener(destination = "publish.queue", containerFactory = "jmsListenerContainerQueue")
     @SendTo("out.queue")
     public String receive(String text){
